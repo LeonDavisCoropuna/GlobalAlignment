@@ -1,0 +1,24 @@
+Score final: -3
+
+Matriz de puntuación:
+    - A  T  A  C  C  A  T  A  C  G  T  
+-   0  -2  -4  -6  -8 -10 -12 -14 -16 -18 -20 -22 
+T  -2  -1  -1  -3  -5  -7  -9 -11 -13 -15 -17 -19 
+A  -4  -1  -2   0  -2  -4  -6  -8 -10 -12 -14 -16 
+C  -6  -3  -2  -2   1  -1  -3  -5  -7  -9 -11 -13 
+C  -8  -5  -4  -3  -1   2   0  -2  -4  -6  -8 -10 
+G -10  -7  -6  -5  -3   0   1  -1  -3  -5  -5  -7 
+A -12  -9  -8  -5  -5  -2   1   0   0  -2  -4  -6 
+T -14 -11  -8  -7  -6  -4  -1   2   0  -1  -3  -3 
+
+Total de óptimos encontrados: 2
+
+Alineaminetos encontrados:
+Alineamiento 1:
+-TACC-GA--T
+ATACCATACGT
+
+Alineamiento 2:
+-TACCG-A--T
+ATACCATACGT
+

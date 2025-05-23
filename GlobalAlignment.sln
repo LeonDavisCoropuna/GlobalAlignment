@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalAlignment", "GlobalAlignment\GlobalAlignment.csproj", "{587D097E-2E4D-45A8-9FB7-619D71215845}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalAlignment.Tests", "GlobalAlignment.Tests\GlobalAlignment.Tests.csproj", "{585953B5-ABB3-4D73-994C-1A6B73258622}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{587D097E-2E4D-45A8-9FB7-619D71215845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{587D097E-2E4D-45A8-9FB7-619D71215845}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{587D097E-2E4D-45A8-9FB7-619D71215845}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{587D097E-2E4D-45A8-9FB7-619D71215845}.Release|Any CPU.Build.0 = Release|Any CPU
+		{585953B5-ABB3-4D73-994C-1A6B73258622}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{585953B5-ABB3-4D73-994C-1A6B73258622}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{585953B5-ABB3-4D73-994C-1A6B73258622}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{585953B5-ABB3-4D73-994C-1A6B73258622}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

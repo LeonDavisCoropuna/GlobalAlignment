@@ -1,0 +1,14 @@
+/home/leon/Documentos/UNSA/BIOINFORMATICA/GlobalAlignment/GlobalAlignment/bin/Debug/net8.0/GlobalAlignment.deps.json
+/home/leon/Documentos/UNSA/BIOINFORMATICA/GlobalAlignment/GlobalAlignment/bin/Debug/net8.0/GlobalAlignment.dll
+/home/leon/Documentos/UNSA/BIOINFORMATICA/GlobalAlignment/GlobalAlignment/bin/Debug/net8.0/GlobalAlignment.pdb
+/home/leon/Documentos/UNSA/BIOINFORMATICA/GlobalAlignment/GlobalAlignment/obj/Debug/net8.0/GlobalAlignment.GeneratedMSBuildEditorConfig.editorconfig
+/home/leon/Documentos/UNSA/BIOINFORMATICA/GlobalAlignment/GlobalAlignment/obj/Debug/net8.0/GlobalAlignment.AssemblyInfoInputs.cache
+/home/leon/Documentos/UNSA/BIOINFORMATICA/GlobalAlignment/GlobalAlignment/obj/Debug/net8.0/GlobalAlignment.AssemblyInfo.cs
+/home/leon/Documentos/UNSA/BIOINFORMATICA/GlobalAlignment/GlobalAlignment/obj/Debug/net8.0/GlobalAlignment.csproj.CoreCompileInputs.cache
+/home/leon/Documentos/UNSA/BIOINFORMATICA/GlobalAlignment/GlobalAlignment/obj/Debug/net8.0/GlobalAlignment.dll
+/home/leon/Documentos/UNSA/BIOINFORMATICA/GlobalAlignment/GlobalAlignment/obj/Debug/net8.0/refint/GlobalAlignment.dll
+/home/leon/Documentos/UNSA/BIOINFORMATICA/GlobalAlignment/GlobalAlignment/obj/Debug/net8.0/GlobalAlignment.pdb
+/home/leon/Documentos/UNSA/BIOINFORMATICA/GlobalAlignment/GlobalAlignment/obj/Debug/net8.0/ref/GlobalAlignment.dll
+/home/leon/Documentos/UNSA/BIOINFORMATICA/GlobalAlignment/GlobalAlignment/bin/Debug/net8.0/GlobalAlignment
+/home/leon/Documentos/UNSA/BIOINFORMATICA/GlobalAlignment/GlobalAlignment/bin/Debug/net8.0/GlobalAlignment.runtimeconfig.json
+/home/leon/Documentos/UNSA/BIOINFORMATICA/GlobalAlignment/GlobalAlignment/obj/Debug/net8.0/GlobalAlignment.genruntimeconfig.cache
