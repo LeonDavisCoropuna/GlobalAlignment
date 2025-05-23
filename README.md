@@ -16,8 +16,8 @@ Este proyecto implementa un alineamiento global de secuencias con manejo de empa
 1. Clonar el repositorio:
 
 ```bash
-git clone https://github.com/tu_usuario/tu_repositorio.git
-cd tu_repositorio
+git clone https://github.com/LeonDavisCoropuna/GlobalAlignment.git
+cd GlobalAlignment
 ````
 
 2. Compilar el proyecto:
