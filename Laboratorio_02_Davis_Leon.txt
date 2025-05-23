@@ -1,0 +1,261 @@
+# GlobalAlignment
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+
+namespace GlobalAlignment
+{
+  public class GlobalAligner
+  {
+    private const int Match = 1;
+    private const int Mismatch = -1;
+    private const int Gap = -2;
+
+    // Retorna un objeto con score y alineamientos
+    public static bool IsSubstring(string main, string sub)
+    {
+      if (main == null || sub == null)
+        return false;
+      return main.Contains(sub);
+    }
+
+    public static (int score, List<(string aligned1, string aligned2)> alignments) Align(string s1, string s2, string outputPath)
+    {
+      int n = s1.Length + 1;
+      int m = s2.Length + 1;
+      int[,] scoreMatrix = new int[n, m];
+      List<Direction>[,] traceback = new List<Direction>[n, m];
+
+      // Inicializar bordes y listas de traceback
+      for (int i = 0; i < n; i++)
+      {
+        scoreMatrix[i, 0] = i * Gap;
+        traceback[i, 0] = new List<Direction> { Direction.Up };
+      }
+      for (int j = 0; j < m; j++)
+      {
+        scoreMatrix[0, j] = j * Gap;
+        traceback[0, j] = new List<Direction> { Direction.Left };
+      }
+      traceback[0, 0] = new List<Direction> { Direction.None };
+
+      // Rellenar matriz y traceback
+      for (int i = 1; i < n; i++)
+      {
+        for (int j = 1; j < m; j++)
+        {
+          int scoreDiag = scoreMatrix[i - 1, j - 1] + (s1[i - 1] == s2[j - 1] ? Match : Mismatch);
+          int scoreUp = scoreMatrix[i - 1, j] + Gap;
+          int scoreLeft = scoreMatrix[i, j - 1] + Gap;
+
+          int maxScore = Math.Max(scoreDiag, Math.Max(scoreUp, scoreLeft));
+          scoreMatrix[i, j] = maxScore;
+
+          traceback[i, j] = new List<Direction>();
+          if (maxScore == scoreDiag) traceback[i, j].Add(Direction.Diagonal);
+          if (maxScore == scoreUp) traceback[i, j].Add(Direction.Up);
+          if (maxScore == scoreLeft) traceback[i, j].Add(Direction.Left);
+        }
+      }
+
+      // Backtracking para obtener todos los alineamientos óptimos
+      List<(string, string)> alignments = new List<(string, string)>();
+      Backtrack(s1, s2, traceback, s1.Length, s2.Length, "", "", alignments);
+
+      // Escribir resultados en archivo
+      using StreamWriter writer = new(outputPath);
+
+      // Score final
+      int finalScore = scoreMatrix[s1.Length, s2.Length];
+      writer.WriteLine($"Score final: {finalScore}");
+
+      // Matriz con etiquetas
+      writer.WriteLine("\nMatriz de puntuación:");
+      writer.Write("    ");
+      writer.Write("- ");
+      for (int j = 0; j < s2.Length; j++)
+        writer.Write(s2[j] + "  ");
+      writer.WriteLine();
+
+      for (int i = 0; i < n; i++)
+      {
+        if (i == 0)
+          writer.Write("- ");
+        else
+          writer.Write(s1[i - 1] + " ");
+
+        for (int j = 0; j < m; j++)
+        {
+          writer.Write($"{scoreMatrix[i, j],3} ");
+        }
+        writer.WriteLine();
+      }
+
+      writer.WriteLine($"\nTotal de óptimos encontrados: {alignments.Count}");
+
+      // Escribir todos los alineamientos
+      writer.WriteLine("\nAlineaminetos encontrados:");
+      int count = 1;
+      foreach (var (aligned1, aligned2) in alignments)
+      {
+        writer.WriteLine($"Alineamiento {count++}:");
+        writer.WriteLine(aligned1);
+        writer.WriteLine(aligned2);
+        writer.WriteLine();
+      }
+
+      // Retornar score y alineamientos para tests u otros usos
+      return (finalScore, alignments);
+    }
+
+    private static void Backtrack(
+        string s1, string s2,
+        List<Direction>[,] traceback, int i, int j,
+        string aligned1, string aligned2,
+        List<(string, string)> alignments)
+    {
+      if (i == 0 && j == 0)
+      {
+        alignments.Add((Reverse(aligned1), Reverse(aligned2)));
+        return;
+      }
+
+      foreach (var dir in traceback[i, j])
+      {
+        switch (dir)
+        {
+          case Direction.Diagonal:
+            Backtrack(s1, s2, traceback, i - 1, j - 1, aligned1 + s1[i - 1], aligned2 + s2[j - 1], alignments);
+            break;
+          case Direction.Up:
+            Backtrack(s1, s2, traceback, i - 1, j, aligned1 + s1[i - 1], aligned2 + '-', alignments);
+            break;
+          case Direction.Left:
+            Backtrack(s1, s2, traceback, i, j - 1, aligned1 + '-', aligned2 + s2[j - 1], alignments);
+            break;
+        }
+      }
+    }
+
+    private static string Reverse(string s)
+    {
+      var arr = s.ToCharArray();
+      Array.Reverse(arr);
+      return new string(arr);
+    }
+
+    private enum Direction
+    {
+      None,
+      Up,
+      Left,
+      Diagonal
+    }
+  }
+}
+
+# Tests
+
+using System;
+using System.Collections.Generic;
+using Xunit;
+using GlobalAlignment;
+
+public class GlobalAlignerTests
+{
+  [Fact]
+  public void Align_ShouldReturnExpectedScoreAndAlignments()
+  {
+    string s1 = "TACGCGC";
+    string s2 = "TCCGA";
+
+    var result = GlobalAligner.Align(s1, s2, "dummy.txt"); // dummy.txt porque no nos importa el archivo en el test
+
+    // Score esperado
+    int expectedScore = -1;
+    Assert.Equal(expectedScore, result.score);
+
+    // Alineamientos esperados
+    var expectedAlignments = new List<(string, string)>
+        {
+            ("TACGCGC", "T-C-CGA")
+        };
+
+    // Como puede haber múltiples alineamientos, buscamos que al menos uno coincida
+    bool matchFound = false;
+    foreach (var (aligned1, aligned2) in result.alignments)
+    {
+      var normA1 = aligned1.Replace(" ", "").Replace("\t", "");
+      var normA2 = aligned2.Replace(" ", "").Replace("\t", "");
+
+      if (normA1 == expectedAlignments[0].Item1.Replace(" ", "") &&
+          normA2 == expectedAlignments[0].Item2.Replace(" ", ""))
+      {
+        matchFound = true;
+        break;
+      }
+    }
+
+    Assert.True(matchFound, "No se encontró el alineamiento esperado.");
+  }
+
+  [Fact]
+  public void Align_ShouldReturnExpectedScoreAndAlignments2()
+  {
+    string s1 = "TACCGAT";
+    string s2 = "ATACCATACGT";
+
+    var result = GlobalAligner.Align(s1, s2, "dummy.txt"); // dummy.txt porque no nos importa el archivo en el test
+
+    // Score esperado
+    int expectedScore = -3;
+    Assert.Equal(expectedScore, result.score);
+
+    // Alineamientos esperados
+    var expectedAlignments = new List<(string, string)>
+    {
+        ("-TACC-GA--T", "ATACCATACGT"),
+        ("-TACCG-A--T", "ATACCATACGT")
+    };
+
+    // Como puede haber múltiples alineamientos, buscamos que al menos uno coincida
+    bool matchFound = false;
+    foreach (var (aligned1, aligned2) in result.alignments)
+    {
+      var normA1 = aligned1.Replace(" ", "").Replace("\t", "");
+      var normA2 = aligned2.Replace(" ", "").Replace("\t", "");
+
+      if (normA1 == expectedAlignments[0].Item1.Replace(" ", "") &&
+          normA2 == expectedAlignments[0].Item2.Replace(" ", ""))
+      {
+        matchFound = true;
+        break;
+      }
+    }
+
+    Assert.True(matchFound, "No se encontró el alineamiento esperado.");
+  }
+  [Fact]
+  public void IsSubstring_ShouldReturnTrue_WhenSubIsInsideMain()
+  {
+    string main = "ATACCATACGT";
+    string sub = "CCAT";
+
+    bool result = GlobalAligner.IsSubstring(main, sub);
+
+    Assert.True(result);
+  }
+
+  [Fact]
+  public void IsSubstring_ShouldReturnFalse_WhenSubIsNotInsideMain()
+  {
+    string main = "ATACCATACGT";
+    string sub = "GGG";
+
+    bool result = GlobalAligner.IsSubstring(main, sub);
+
+    Assert.False(result);
+  }
+
+}
