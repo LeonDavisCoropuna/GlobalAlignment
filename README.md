@@ -33,6 +33,7 @@ dotnet run --project GlobalAlignment
 ```
 
 La salida es por consola indicando el tiempo de ejecución, el score y los alineamineot óptimos, ademas tambien se produce un .txt de salida donde se almacena la matriz de alineamineto global (por defecto resultado.txt), la estructura del .txt es la siguiente:
+
 ![Imagen mostrando salida en consola con tests pasados](/images/output-result.png)
 
 ## Cómo ejecutar los tests
